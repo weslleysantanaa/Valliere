@@ -1,7 +1,6 @@
 package com.principedevalliere.controllers;
 
 import com.principedevalliere.model.ChapterModel;
-import com.principedevalliere.repositories.ChapterRepository;
 import com.principedevalliere.services.ChapterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -31,8 +30,13 @@ public class ChapterController {
         return service.createChapter(chapter);
     }
 
-    @PutMapping(value = "/edit/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ChapterModel updateChapter(@PathVariable Long id, ChapterModel chapter) throws Exception {
+    @PutMapping(value = "/edit/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ChapterModel updateChapter(@PathVariable Long id, @RequestBody ChapterModel chapter) throws Exception {
         return service.updateChapter(id, chapter);
+    }
+
+    @DeleteMapping(value = "/delete/{id}")
+    public void deleteChapter(@PathVariable Long id) {
+        service.deleteChapter(id);
     }
 }

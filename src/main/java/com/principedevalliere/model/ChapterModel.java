@@ -17,18 +17,7 @@ public class ChapterModel {
     @Column(nullable = false)
     private String body;
 
-    public ChapterModel(String title, String body) {
-        this.title = title;
-        this.body = body;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public ChapterModel() {}
 
     public String getTitle() {
         return title;

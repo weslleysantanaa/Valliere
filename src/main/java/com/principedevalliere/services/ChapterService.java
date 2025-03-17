@@ -35,6 +35,10 @@ public class ChapterService {
         ChapterModel chapter = searchedChapter.get();
         chapter.setTitle(editedChapter.getTitle());
         chapter.setBody(editedChapter.getBody());
-        return chapter;
+        return repository.save(chapter);
+    }
+
+    public void deleteChapter(Long id) {
+        repository.deleteById(id);
     }
 }
