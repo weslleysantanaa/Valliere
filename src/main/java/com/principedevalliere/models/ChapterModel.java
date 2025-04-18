@@ -1,6 +1,5 @@
-package com.principedevalliere.model;
+package com.principedevalliere.models;
 import jakarta.persistence.*;
-import org.springframework.boot.autoconfigure.web.WebProperties;
 
 @Entity
 @Table(name = "chapters")
@@ -16,6 +15,11 @@ public class ChapterModel {
     @Lob
     @Column(nullable = false)
     private String body;
+
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private BookModel book_id;
+
 
     public ChapterModel() {}
 
@@ -34,4 +38,8 @@ public class ChapterModel {
     public void setBody(String body) {
         this.body = body;
     }
+
+    public BookModel getBookModel() { return book_id; }
+
+    public void setBookModel(BookModel bookModel) { this.book_id = bookModel; }
 }

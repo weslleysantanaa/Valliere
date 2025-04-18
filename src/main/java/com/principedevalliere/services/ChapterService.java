@@ -1,12 +1,11 @@
 package com.principedevalliere.services;
 
-import com.principedevalliere.model.ChapterModel;
+import com.principedevalliere.models.ChapterModel;
 import com.principedevalliere.repositories.ChapterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
-import java.rmi.server.ExportException;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +22,7 @@ public class ChapterService {
     public Optional<ChapterModel> getChapter(Long id) {
         return repository.findById(id);
     }
+
     public ChapterModel createChapter(ChapterModel chapter) {
         return repository.save(chapter);
     }
