@@ -1,41 +1,48 @@
 package com.principedevalliere.models;
 
+import com.principedevalliere.dtos.AuthorDTO;
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import java.util.UUID;
 
 @Entity
 @Table(name = "books")
 public class BookModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column(unique = true, nullable = false, length = 60)
     private String title;
+    private String synopsis;
 
-    private String sinopsis;
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private AuthorModel author;
 
-    @Column(nullable = false)
-    private String author;
 
     public BookModel() {}
 
-    public BookModel(String title, String sinopsis, String author) {
+    public BookModel(String title, String synopsis, AuthorModel author) {
         this.title = title;
-        this.sinopsis = sinopsis;
+        this.synopsis = synopsis;
         this.author = author;
     }
 
-    public String getTitle() { return this.title; }
+    public String getTitle() { return title; }
 
     public void setTitle(String title) { this.title = title; }
 
-    public String getSinopsis() { return this.sinopsis; }
+    public String getSynopsis() { return synopsis; }
 
-    public void setSinopsis(String sinopsis) { this.sinopsis = sinopsis; }
+    public void setSynopsis(String synopsis) { this.synopsis = synopsis; }
 
-    public String getAuthor() { return this.author; }
+    public AuthorModel getAuthor() { return author; }
 
-    public void setAuthor(String author) { this.author = author; }
+    public void setAuthor(AuthorModel author) { this.author = author; }
 }
 

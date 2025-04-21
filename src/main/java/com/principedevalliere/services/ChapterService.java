@@ -1,5 +1,6 @@
 package com.principedevalliere.services;
 
+import com.principedevalliere.dtos.ChapterDTO;
 import com.principedevalliere.models.ChapterModel;
 import com.principedevalliere.repositories.ChapterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ChapterService {
@@ -15,19 +17,17 @@ public class ChapterService {
     @Autowired
     ChapterRepository repository;
 
-    public List<ChapterModel> getAllChapters() {
-        return repository.findAll();
+    public List<ChapterDTO> getAllChaptersByBookTitle(String bookTitle) {
+        return repository.findByBookTitle(bookTitle).stream().map(this::convertChapterModelToDTO).toList();
     }
 
-    public Optional<ChapterModel> getChapter(Long id) {
-        return repository.findById(id);
+    public Optional<ChapterDTO> getChapter(UUID id) {
+        return repository.findById(id).map(this::convertChapterModelToDTO);
     }
 
-    public ChapterModel createChapter(ChapterModel chapter) {
-        return repository.save(chapter);
-    }
+    public ChapterDTO createChapter(ChapterModel chapter) { return convertChapterModelToDTO(repository.save(chapter)); }
 
-    public ChapterModel updateChapter(Long id, ChapterModel editedChapter) throws Exception {
+    public ChapterDTO updateChapter(UUID id, ChapterModel editedChapter) throws Exception {
         Optional<ChapterModel> searchedChapter = repository.findById(id);
         if (searchedChapter.isEmpty()) {
             return null;
@@ -35,10 +35,14 @@ public class ChapterService {
         ChapterModel chapter = searchedChapter.get();
         chapter.setTitle(editedChapter.getTitle());
         chapter.setBody(editedChapter.getBody());
-        return repository.save(chapter);
+        return convertChapterModelToDTO(repository.save(chapter));
     }
 
-    public void deleteChapter(Long id) {
+    public void deleteChapter(UUID id) {
         repository.deleteById(id);
+    }
+
+    public ChapterDTO convertChapterModelToDTO(ChapterModel chapterModel) {
+        return new ChapterDTO(chapterModel.getTitle(), chapterModel.getBody());
     }
 }

@@ -1,29 +1,31 @@
 package com.principedevalliere.dtos;
 
+import com.principedevalliere.models.AuthorModel;
+
 public class BookDTO {
 
     private String title;
-    private String sinopsis;
-    private String author;
+    private String synopsis;
+    private String authorName;
 
     public BookDTO() {}
 
-    public BookDTO(String title, String sinopsis, String author) {
+    public BookDTO(String title, String synopsis, String authorName) {
         this.title = title;
-        this.sinopsis = sinopsis;
-        this.author = author;
+        this.synopsis = synopsis;
+        this.authorName = authorName;
     }
 
-    public String getTitle() { return this.title; }
+    public String getTitle() { return title; }
 
     public void setTitle(String title) { this.title = title; }
 
-    public String getSinopsis() { return this.sinopsis; }
+    public String getSynopsis() { return synopsis; }
 
-    public void setSinopsis(String sinopsis) { this.sinopsis = sinopsis; }
+    public void setSynopsis(String synopsis) { this.synopsis = synopsis; }
 
-    public String getAuthor() { return this.author; }
+    public String getAuthorName() { return authorName; }
 
-    public void setAuthor(String author) { this.sinopsis = author; }
+    public void setAuthorName(String author) { this.authorName = author; }
 }
 

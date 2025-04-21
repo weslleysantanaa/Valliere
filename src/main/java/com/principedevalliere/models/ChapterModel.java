@@ -1,27 +1,38 @@
 package com.principedevalliere.models;
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import java.util.UUID;
 
 @Entity
 @Table(name = "chapters")
 public class ChapterModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
-    @Column(nullable = false, unique = true, length = 20)
+    @Column(nullable = false, length = 60)
     private String title;
 
     @Lob
     @Column(nullable = false)
     private String body;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(nullable = false)
-    private BookModel book_id;
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private BookModel book;
 
 
     public ChapterModel() {}
+
+    public ChapterModel(String title, String body, BookModel book){
+        this.title = title;
+        this.body = body;
+        this.book = book;
+    }
 
     public String getTitle() {
         return title;
@@ -39,7 +50,7 @@ public class ChapterModel {
         this.body = body;
     }
 
-    public BookModel getBookModel() { return book_id; }
+    public BookModel getBookModel() { return book; }
 
-    public void setBookModel(BookModel bookModel) { this.book_id = bookModel; }
+    public void setBookModel(BookModel bookModel) { this.book = bookModel; }
 }
