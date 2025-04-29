@@ -21,13 +21,13 @@ public class ChapterController {
     ChapterService service;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<ChapterDTO> getAllChaptersByBookName(@PathVariable(value = "bookTitle") String bookTitle) {
+    public List<ChapterDTO> getAllChaptersByBookName(@PathVariable String bookTitle) {
         return service.getAllChaptersByBookTitle(bookTitle);
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Optional<ChapterDTO> getChapter(@PathVariable UUID id) {
-        return service.getChapter(id);
+    public Optional<ChapterDTO> getChapter(@PathVariable String bookTitle, @PathVariable UUID id) {
+        return service.getChapterByIdInBookTitle(bookTitle, id);
     }
 
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

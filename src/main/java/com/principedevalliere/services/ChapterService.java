@@ -5,6 +5,7 @@ import com.principedevalliere.models.ChapterModel;
 import com.principedevalliere.repositories.ChapterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,11 +19,11 @@ public class ChapterService {
     ChapterRepository repository;
 
     public List<ChapterDTO> getAllChaptersByBookTitle(String bookTitle) {
-        return repository.findByBookTitle(bookTitle).stream().map(this::convertChapterModelToDTO).toList();
+        return repository.findAllChaptersByBookTitle(bookTitle).stream().map(this::convertChapterModelToDTO).toList();
     }
 
-    public Optional<ChapterDTO> getChapter(UUID id) {
-        return repository.findById(id).map(this::convertChapterModelToDTO);
+    public Optional<ChapterDTO> getChapterByIdInBookTitle(String bookTitle, UUID id) {
+        return repository.findChapterByIdInBookTitle(bookTitle, id).map(this::convertChapterModelToDTO);
     }
 
     public ChapterDTO createChapter(ChapterModel chapter) { return convertChapterModelToDTO(repository.save(chapter)); }
